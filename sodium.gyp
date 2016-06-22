@@ -5,7 +5,7 @@
       'variables': {
         'target_arch%': '<(sodium_architecture)',
       },
-      'type': 'static_library',
+      'type': '<(library)',
       'includes': [ 'sodium.gypi' ],
       'dependencies': [],
       'defines': [
@@ -16,7 +16,7 @@
       'include_dirs': [
         'src/libsodium/include/sodium',
       ],
-      
+
       'xcode_settings': {
         'OTHER_CFLAGS': [
             '-fPIC',
