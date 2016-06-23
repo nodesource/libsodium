@@ -2,14 +2,13 @@
   'targets': [
     {
       'target_name': 'libsodium',
-      'variables': {
-        'target_arch%': '<(sodium_architecture)',
-      },
       'type': '<(library)',
-      'includes': [ 'sodium.gypi' ],
+      'includes': [
+        'sodium.linux.gypi',
+        'sodium.mac.gypi'
+      ],
       'dependencies': [],
       'defines': [
-        '<@(sodium_defines)',
         'SODIUM_STATIC',
         'HAVE_LIBM=1'
       ],
@@ -89,8 +88,16 @@
           },
         }
       },
-      'sources': [
-        '<@(sodium_sources)'
+      'conditions': [
+        # not considering architecture at this point, only x64 for mac
+        [ 'OS=="mac"', {
+          'sources': [ '<@(sodium_mac_sources)' ],
+          'defines': [ '<@(sodium_mac_defines)' ]
+        }],
+        [ 'OS=="linux"', {
+          'sources': [ '<@(sodium_linux_sources)' ],
+          'defines': [ '<@(sodium_linux_defines)' ]
+        }],
       ]
     }
   ]
