@@ -3,7 +3,7 @@
   # contains platform specific variables (different for Linux/mac)
   # as well as needed sources for sodium dist build
   'variables': {
-    'sodium_linux_defines': [
+    'sodium_linux_defines_all': [
       'PACKAGE_NAME="libsodium"', 
       'PACKAGE_TARNAME="libsodium"', 
       'PACKAGE_VERSION="1.0.10"', 
@@ -31,6 +31,19 @@
       '_TANDEM_SOURCE=1', 
       'HAVE_DLFCN_H=1', 
       'LT_OBJDIR=".libs/"', 
+      'HAVE_SYS_MMAN_H=1',
+      'NATIVE_LITTLE_ENDIAN=1',
+      'ASM_HIDE_SYMBOL=.hidden',
+      'HAVE_WEAK_SYMBOLS=1',
+      'CPU_UNALIGNED_ACCESS=1',
+      'HAVE_MMAP=1',
+      'HAVE_MLOCK=1',
+      'HAVE_MADVISE=1',
+      'HAVE_MPROTECT=1',
+      'HAVE_NANOSLEEP=1',
+      'HAVE_POSIX_MEMALIGN=1',
+    ],
+    'sodium_linux_defines_x86': [
       'HAVE_MMINTRIN_H=1', 
       'HAVE_EMMINTRIN_H=1', 
       'HAVE_PMMINTRIN_H=1', 
@@ -39,22 +52,22 @@
       'HAVE_AVXINTRIN_H=1', 
       'HAVE_AVX2INTRIN_H=1', 
       'HAVE_WMMINTRIN_H=1', 
-      'HAVE_SYS_MMAN_H=1', 
-      'NATIVE_LITTLE_ENDIAN=1', 
       'HAVE_AMD64_ASM=1', 
       'HAVE_AVX_ASM=1', 
       'HAVE_TI_MODE=1', 
       'HAVE_CPUID=1', 
-      'ASM_HIDE_SYMBOL=.hidden', 
-      'HAVE_WEAK_SYMBOLS=1', 
-      'CPU_UNALIGNED_ACCESS=1', 
-      'HAVE_MMAP=1', 
-      'HAVE_MLOCK=1', 
-      'HAVE_MADVISE=1', 
-      'HAVE_MPROTECT=1', 
-      'HAVE_NANOSLEEP=1', 
-      'HAVE_POSIX_MEMALIGN=1', 
-      
+    ],
+    'conditions': [
+      [ 'target_arch == "arm"', {
+        'sodium_linux_defines': [
+          '<@(sodium_linux_defines_all)',
+        ],
+      }, {
+        'sodium_linux_defines': [
+          '<@(sodium_linux_defines_all)',
+          '<@(sodium_linux_defines_x86)',
+        ],
+      }],
     ],
     'sodium_linux_sources': [
       'src/libsodium/crypto_aead/chacha20poly1305/sodium/aead_chacha20poly1305.c',
