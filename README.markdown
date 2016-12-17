@@ -5,6 +5,17 @@
 ![libsodium](https://raw.github.com/jedisct1/libsodium/master/logo.png)
 ============
 
+# IMPORTANT FOR GYP USERS
+
+When upgrading the version of sodium, i.e. after every rebase please run: `python gen-gypi.py` both on OSX and Linux and
+check in the resulting changes (if any) to:
+
+- sodium.mac.gypi
+- sodium.linux.gypi
+
+~ ~ ~
+
+
 Sodium is a new, easy-to-use software library for encryption,
 decryption, signatures, password hashing and more.
 
